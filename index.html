@@ -875,8 +875,127 @@ header .communityBadge{
 #blinkyWelcome{z-index:300}
 /* Center the glyph inside the round close button without altering its placement. */
 #historyClose{display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;line-height:1!important;text-align:center!important;box-sizing:border-box!important;font-family:Arial,sans-serif!important;}
-</style></head><body><div class="shell">
-<header><div class="brandCluster"><div class="brandRow"><img class="headerGavel" src="assets/keeper-gavel-original.png" alt="" aria-hidden="true"><h1>WEN MINT?!</h1><img class="communityBadge" src="assets/community-project-badge.svg" alt="Community project"></div></div><nav><button class="secondary" onclick="show('home')" id="navHome">Главная</button><button class="secondary" onclick="show('collection')" id="navCollection">MY COLLECTION</button><button class="secondary" onclick="show('stats')" id="navStats">MY STATS</button><button class="secondary" onclick="openAbout()" id="navAbout">ABOUT</button><button class="secondary" onclick="toggleLang()" id="lang">EN</button><div class="headerAudio"><button type="button" id="headerAudioToggle" aria-expanded="false" aria-controls="headerAudioPanel" onclick="toggleHeaderAudio()"><span class="goldSpeaker" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></span><span id="headerAudioText">AUDIO</span></button><div id="headerAudioPanel" hidden><div class="settings" id="audioSettings"><label>🎵 <span id="musicLabel">Музыка</span><input id="musicVol" type="range" min="0" max="100" value="25"></label><label>🔔 <span id="fxLabel">Эффекты</span><input id="fxVol" type="range" min="0" max="100" value="65"></label><label>🎙️ <span id="voiceLabel">Голос</span><input id="voiceVol" type="range" min="0" max="100" value="85"></label></div><button type="button" id="headerMusicToggle" onclick="toggleHomeMusic()">🎵 MUSIC ON / OFF</button></div></div></nav><button id="mute" hidden aria-hidden="true" tabindex="-1">🔊</button></header>
+</style><style id="mobileAuctionRepair20261030">
+/* Mobile gameplay: keep bidding accessible instead of squeezing desktop columns. */
+@media(max-width:900px){
+ body:has(#auction.show){overflow-x:hidden!important}
+ body:has(#auction.show) .shell{height:auto!important;min-height:100dvh!important;overflow:visible!important}
+ #auction.show{display:block!important;height:auto!important;min-height:0!important;overflow:visible!important;flex:none!important}
+ #auction .arena{display:flex!important;flex-direction:column!important;grid-template-columns:none!important;height:auto!important;min-height:0!important;gap:10px!important}
+ #auction .arena>.card{width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;grid-column:auto!important;gap:8px!important;padding:12px!important}
+ #auction .arena>.card:nth-child(2){order:1}
+ #auction .arena>.card:nth-child(1){order:2}
+ #auction .arena>.card:nth-child(3){order:3}
+ #auction .eggstage{min-height:90px!important;height:100px!important;flex:none!important}
+ #auction .eggstage img{height:92px!important}
+ #auction .host{min-height:65px!important;padding:7px!important}
+ #auction .host img{width:55px!important;height:55px!important}
+ #auction .speech{font-size:13px!important}
+ #auction .bidQuick{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+ #auction .bidQuick button{min-width:0!important;min-height:42px!important;padding:7px 3px!important}
+ #auction .controls{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)!important;gap:8px!important}
+ #auction .controls input{width:100%!important;min-width:0!important;font-size:16px!important;min-height:48px!important}
+ #auction .controls button{min-width:0!important;min-height:48px!important}
+ #auction .bids,#auction .feed{flex:none!important;max-height:240px!important;min-height:0!important;overflow-y:auto!important}
+ #auction .row{min-width:0!important;flex-wrap:wrap!important}
+ #auction .stat{min-width:0!important}
+ #auction .big{font-size:24px!important}
+ #auction #liveEvent{min-width:0!important}
+ #tourLayer:not([hidden]) #tourPanel{position:fixed!important;left:8px!important;right:8px!important;top:auto!important;bottom:max(8px,env(safe-area-inset-bottom))!important;width:auto!important;max-width:none!important;max-height:min(42dvh,320px)!important;overflow-y:auto!important;z-index:302!important}
+ #tourLayer #tourPanel::before,#tourLayer #tourPanel::after{display:none!important}
+ #tourPointer{display:none!important}
+ #historyTab{display:none!important}
+}
+@media(max-width:390px){#auction .arena>.card{padding:9px!important}#auction .bidQuick{gap:4px!important}}
+</style><style id="mobileViewportHistoryFix20261030">
+/* Restore the original illustrated History scroll, sized as a mobile floating tab. */
+@media (max-width:900px){
+ #historyTab:not([hidden]){display:block!important;position:fixed!important;left:auto!important;right:8px!important;top:auto!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;width:94px!important;height:94px!important;max-width:25vw!important;max-height:25vw!important;z-index:65!important;transform:none!important;animation:historyHang 5.5s ease-in-out infinite!important;filter:drop-shadow(0 3px 8px #16051d99)!important}
+ #historyTab:hover,#historyTab:focus-visible{left:auto!important;right:8px!important;top:auto!important;bottom:calc(12px + env(safe-area-inset-bottom))!important}
+ #historyTab img{width:100%!important;height:100%!important;object-fit:contain!important}
+ body:has(#auction.show) #historyTab{width:62px!important;height:62px!important;opacity:.85!important}
+ body:has(#tourLayer:not([hidden])) #historyTab{display:none!important}
+ /* The landing page must fit the viewport width and allow vertical scrolling. */
+ html,body{max-width:100%!important;overflow-x:hidden!important}
+ .shell{max-width:100%!important;width:100%!important;box-sizing:border-box!important}
+ #home.show{width:100%!important;max-width:100%!important;box-sizing:border-box!important;padding-left:8px!important;padding-right:8px!important}
+ #home .heroArt{height:clamp(180px,34dvh,275px)!important;min-height:0!important;max-height:275px!important;flex:none!important}
+ #home .heroNewTitle{height:39%!important}
+ #home .heroNewDragons{height:72%!important}
+ #home .homeActions{max-width:100%!important}
+ #home .homeActions .homeActionCard{min-width:0!important}
+ #home .modeChooser{max-width:100%!important}
+ #historyOverlay{max-width:100vw!important}
+ #historyPanel{max-width:calc(100vw - 16px)!important;box-sizing:border-box!important}
+}
+@media(max-width:430px){
+ header{max-width:100%!important;box-sizing:border-box!important}
+ header nav{max-width:100%!important;flex-wrap:wrap!important}
+ #home .heroArt{height:clamp(175px,30dvh,235px)!important}
+ #historyTab:not([hidden]){width:78px!important;height:78px!important}
+ body:has(#auction.show) #historyTab{width:56px!important;height:56px!important}
+}
+</style><style id="historyFlagTopLeftMobile20261030">
+@media(max-width:900px){
+#historyTab:not([hidden]){position:fixed!important;top:174px!important;bottom:auto!important;left:2px!important;right:auto!important;width:76px!important;height:76px!important;max-width:22vw!important;max-height:22vw!important;z-index:65!important;transform:none!important;}
+#historyTab:hover,#historyTab:focus-visible{top:174px!important;bottom:auto!important;left:2px!important;right:auto!important;transform:none!important;}
+}
+@media(max-width:390px){#historyTab:not([hidden]){top:162px!important;width:65px!important;height:65px!important}#historyTab:hover,#historyTab:focus-visible{top:162px!important}}
+</style><style id="mobileSingleRowNav20261030">
+/* Mobile only: all six navigation controls in one row; audio remains accessible. */
+@media(max-width:600px){
+ header{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:5px!important;padding-left:5px!important;padding-right:5px!important}
+ header .brandCluster{width:100%!important;min-width:0!important}
+ header nav{display:grid!important;grid-template-columns:0.85fr 1.55fr 1.05fr .85fr .52fr 36px!important;gap:3px!important;width:100%!important;max-width:100%!important;min-width:0!important;align-items:stretch!important;justify-content:stretch!important;flex-wrap:nowrap!important}
+ header nav>button.secondary,header nav .headerAudio{min-width:0!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;margin:0!important}
+ header nav>button.secondary{font-size:clamp(7px,2.15vw,10px)!important;line-height:1.05!important;padding:8px 1px!important;min-height:34px!important;border-radius:9px!important;white-space:nowrap!important;letter-spacing:-.2px!important}
+ header nav .headerAudio{display:flex!important;position:relative!important;justify-content:stretch!important}
+ header nav #headerAudioToggle{width:100%!important;min-width:0!important;min-height:34px!important;padding:5px 2px!important;border-radius:9px!important;gap:0!important}
+ header nav #headerAudioToggle .goldSpeaker svg{width:18px!important;height:18px!important}
+ header nav #headerAudioToggle .srOnlyAudio{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important}
+ #headerAudioPanel{right:0!important;left:auto!important;z-index:200!important;max-width:calc(100vw - 16px)!important}
+}
+@media(max-width:360px){header nav{grid-template-columns:.8fr 1.5fr 1fr .8fr .5fr 32px!important;gap:2px!important}header nav>button.secondary{font-size:7px!important}}
+</style>
+<style id="mobileBlinkyAndFooterFix20261030">
+@media(max-width:600px){
+ #blinkyWelcome{width:132px!important;max-width:34vw!important;z-index:250!important;}
+ #blinkyWelcome .blinkyWelcomeSticker{width:70px!important;height:70px!important;filter:drop-shadow(0 3px 5px #140a2f99)!important;}
+ #blinkyWelcome .blinkyWelcomeBubble{font-size:10px!important;line-height:1.22!important;padding:7px 6px!important;margin-bottom:5px!important;border-width:2px!important;border-radius:12px!important;overflow-wrap:anywhere!important;}
+ #blinkyWelcome .blinkyWelcomeBubble:before{bottom:-8px!important;width:11px!important;height:11px!important;border-width:2px!important;}
+ body:has(#home.show) .shell{padding-bottom:12px!important;}
+ #home #homeNote{display:block!important;position:relative!important;flex:none!important;order:5!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;line-height:1.35!important;font-size:10px!important;text-align:center!important;white-space:normal!important;margin:7px 0 3px!important;padding:0 8px!important;box-sizing:border-box!important;}
+ body:has(#home.show) footer{position:relative!important;display:block!important;flex:none!important;width:100%!important;height:auto!important;min-height:0!important;line-height:1.4!important;font-size:9px!important;text-align:center!important;white-space:normal!important;overflow-wrap:break-word!important;margin:4px auto 10px!important;padding:0 8px!important;box-sizing:border-box!important;}
+}
+</style>
+<style id="mobileBlinkyFooterV6">
+@media(max-width:600px){
+/* On the home screen, the short note replaces the duplicate footer. */
+body:has(#home.show) footer{display:none!important;}
+#home #homeNote{position:relative!important;display:block!important;transform:none!important;line-height:1.4!important;font-size:10px!important;white-space:normal!important;overflow:visible!important;margin:9px auto 10px!important;padding:0 12px!important;max-width:100%!important;}
+#blinkyWelcome{width:112px!important;max-width:29vw!important;z-index:260!important;}
+#blinkyWelcome .blinkyWelcomeSticker{width:55px!important;height:55px!important;}
+#blinkyWelcome .blinkyWelcomeBubble{font-size:9px!important;padding:5px!important;line-height:1.2!important;margin-bottom:3px!important;}
+}
+</style>
+
+<style id="mobileHeaderAndFooterV7">
+@media (max-width:600px){
+ /* True centered title, with the gavel and reduced badge independently anchored. */
+ header .brandCluster, header .brandRow{width:100%!important;max-width:100%!important;min-width:0!important;}
+ header .brandRow{position:relative!important;display:flex!important;justify-content:center!important;align-items:center!important;min-height:39px!important;padding:0 85px 0 39px!important;box-sizing:border-box!important;}
+ header .brandRow h1{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;white-space:nowrap!important;font-size:clamp(17px,5.2vw,23px)!important;line-height:1.1!important;margin:0!important;z-index:1!important;}
+ header .brandRow .headerGavel{position:absolute!important;left:5px!important;top:50%!important;transform:translateY(-50%)!important;width:30px!important;height:30px!important;flex:none!important;}
+ header .brandRow .communityBadge{position:absolute!important;right:4px!important;top:50%!important;transform:translateY(-50%)!important;width:82px!important;max-width:82px!important;max-height:26px!important;height:auto!important;flex:none!important;margin:0!important;object-fit:contain!important;}
+ /* Footer must be in document flow: primary line first, smaller legal lines below. */
+ body:has(#home.show) .shell{height:auto!important;min-height:100dvh!important;display:flex!important;flex-direction:column!important;padding-bottom:12px!important;}
+ #home.show{height:auto!important;min-height:0!important;flex:0 0 auto!important;overflow:visible!important;padding-bottom:0!important;}
+ #home #homeNote{position:static!important;display:block!important;order:5!important;flex:0 0 auto!important;grid-row:auto!important;grid-column:auto!important;transform:none!important;width:100%!important;max-width:100%!important;margin:12px auto 0!important;padding:0 8px!important;color:#fff4d8!important;font-size:11px!important;line-height:1.4!important;text-align:center!important;white-space:normal!important;}
+ body:has(#home.show) footer{display:block!important;position:static!important;flex:0 0 auto!important;transform:none!important;height:auto!important;min-height:0!important;max-width:100%!important;margin:5px auto 10px!important;padding:0 12px!important;color:#e8d8f1!important;font-size:9px!important;line-height:1.45!important;text-align:center!important;white-space:normal!important;overflow-wrap:break-word!important;}
+}
+</style>
+</head><body><div class="shell">
+<header><div class="brandCluster"><div class="brandRow"><img class="headerGavel" src="assets/keeper-gavel-original.png" alt="" aria-hidden="true"><h1>WEN MINT?!</h1><img class="communityBadge" src="assets/community-project-badge.svg" alt="Community project"></div></div><nav><button class="secondary" onclick="show('home')" id="navHome">Главная</button><button class="secondary" onclick="show('collection')" id="navCollection">MY COLLECTION</button><button class="secondary" onclick="show('stats')" id="navStats">MY STATS</button><button class="secondary" onclick="openAbout()" id="navAbout">ABOUT</button><button class="secondary" onclick="toggleLang()" id="lang">EN</button><div class="headerAudio"><button type="button" id="headerAudioToggle" aria-expanded="false" aria-controls="headerAudioPanel" onclick="toggleHeaderAudio()"><span class="goldSpeaker" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></span><span id="headerAudioText" class="srOnlyAudio">AUDIO</span></button><div id="headerAudioPanel" hidden><div class="settings" id="audioSettings"><label>🎵 <span id="musicLabel">Музыка</span><input id="musicVol" type="range" min="0" max="100" value="25"></label><label>🔔 <span id="fxLabel">Эффекты</span><input id="fxVol" type="range" min="0" max="100" value="65"></label><label>🎙️ <span id="voiceLabel">Голос</span><input id="voiceVol" type="range" min="0" max="100" value="85"></label></div><button type="button" id="headerMusicToggle" onclick="toggleHomeMusic()">🎵 MUSIC ON / OFF</button></div></div></nav><button id="mute" hidden aria-hidden="true" tabindex="-1">🔊</button></header>
 <div id="blinkyWelcome" class="blinkyWelcome" aria-live="polite" aria-atomic="true" hidden>
  <div class="blinkyWelcomeBubble" id="blinkyWelcomeText"></div>
  <img src="assets/blinky-welcome-original.png" alt="Blinky" class="blinkyWelcomeSticker">
@@ -1031,6 +1150,19 @@ function renderTour(){
 }
 function positionTour(){
  if(!tourActive)return;
+ if(window.innerWidth<=900){
+  const target=document.querySelector('#auction '+tourSteps[tourStep].target);
+  const panel=$('tourPanel');
+  if(target&&panel){
+   panel.style.left='8px';panel.style.top='auto';
+   panel.classList.remove('tail-left','tail-right','tail-top','tail-bottom');
+   panel.classList.add('tail-none');
+   const r=target.getBoundingClientRect();
+   const freeHeight=window.innerHeight-Math.min(panel.offsetHeight,320)-30;
+   if(r.top<65||r.bottom>freeHeight){target.scrollIntoView({block:'start',behavior:'instant'});window.scrollBy(0,-75)}
+  }
+  return;
+ }
  const el=document.querySelector('#auction '+tourSteps[tourStep].target),panel=$('tourPanel');
  if(!el||!panel)return;
  const r=el.getBoundingClientRect(),w=panel.offsetWidth||370,h=panel.offsetHeight||225;
@@ -1378,7 +1510,18 @@ function positionBlinkyWelcome(){
  if(!layer||!anchor)return;
  const rect=anchor.getBoundingClientRect();
  const width=layer.getBoundingClientRect().width||300;
- // Keep Blinky above CHOOSE LEVEL, entirely in the right-hand open area.
+ // Mobile: Blinky appears at the HEAR BLINKY button level, on its right edge.
+ if(window.innerWidth<=600){
+  const button=$('welcomeBtn');
+  const buttonRect=button?.getBoundingClientRect()||rect;
+  const w=layer.getBoundingClientRect().width||112;
+  const h=layer.getBoundingClientRect().height||115;
+  const left=Math.max(8,Math.min(window.innerWidth-w-8,buttonRect.right-w*.76));
+  const top=Math.max(8,buttonRect.top-h*.66);
+  layer.style.setProperty('--blinky-left',left+'px');
+  layer.style.setProperty('--blinky-bottom',Math.max(8,window.innerHeight-top-h)+'px');
+  return;
+ }
  const left=Math.max(8,Math.min(window.innerWidth-width-8,rect.left+(rect.width-width)/2));
  layer.style.setProperty('--blinky-left',left+'px');
  layer.style.setProperty('--blinky-bottom',Math.max(8,window.innerHeight-rect.top+12)+'px');
